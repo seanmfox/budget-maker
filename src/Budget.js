@@ -1,51 +1,49 @@
 import React, { Component } from 'react';
+import Item from './Item'
+// import { Link } from 'react-router-dom'
 
 class Budget extends Component {
-  state = {
-    categories: [{desc: 'Primary', type: 'income', value: 0}, {desc: 'Rent', type: 'expense', value: 0}],
+
+  activateModal = () => {
+    let modal = document.querySelector('.new-category-container');
+    modal.classList.toggle('modal-hide');
   }
 
-  incomeUpdate = (income) => {
-    this.setState({ income })
-  }
-
-  categoryUpdate = (value, category, type) => {
-    this.setState((prevState) =>
-      ({categories: prevState.categories.map((cat) => {
-      if(cat.desc === category) {
-        // cat.desc = category
-        // cat.type = type
-        cat.value = value
-        return cat
-      } else {
-        return cat
-      }
-    })})
-    )
+  toCategoryUpdate = (value, category, type) => {
+    this.props.fromCategoryUpdate(value, category, type)
   }
 
   render() {
-    const { categories } = this.state
+    const { categories } = this.props
     const incomeItems = categories.filter((item) => item.type === 'income')
     const expenseItems = categories.filter((item) => item.type === 'expense')
-    const total = incomeItems.reduce((acc, val) => acc + val.value, 0) - expenseItems.reduce((acc, val) => acc + val.value, 0)
-
+    let total = incomeItems.reduce((acc, val) => acc + val.value, 0) - expenseItems.reduce((acc, val) => acc + val.value, 0)
 
     return (
       <div>
         <h2>Income</h2>
-          <ol>
-            {incomeItems.map((item) => (
-              <li key={item.desc}><span>{item.desc}</span><input type="text" name={item.desc} onChange={(e) => this.categoryUpdate(e.target.value, item.desc, item.type)}></input></li>
-            ))}
-          </ol>
+          <table>
+            <tbody>
+              <Item 
+                items = { incomeItems }
+                onCategoryUpdate = {(value, category, type) => {this.toCategoryUpdate(value, category, type)}}
+              />
+            </tbody>
+          </table>
         <h2>Expenses</h2>
-          <ol>
-          {expenseItems.map((item) => (
-              <li key={item.desc}><span>{item.desc}</span><input type="text" name={item.desc} onChange={(e) => this.categoryUpdate(e.target.value, item.desc, item.type)}></input></li>
-            ))}            </ol>
+          <table>
+            <tbody>
+              <Item 
+                items = { expenseItems }
+                onCategoryUpdate = {(value, category, type) => {this.toCategoryUpdate(value, category, type)}}
+              />
+            </tbody>
+          </table>
         <h2>Total</h2>
           <input type="text" value={total} disabled></input>
+      <div>
+        <button onClick={(e) => this.activateModal()}>Add a category</button>
+      </div>
       </div>
     );
   }
