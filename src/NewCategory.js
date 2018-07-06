@@ -23,7 +23,7 @@ class NewCategory extends Component {
           <form onSubmit={(e) => this.handleSumit(e)}>
             <label>
               Item Name
-              <input type="text" className="item-name"></input>
+              <input type="text" className="item-name" maxLength="15"></input>
             </label>
             <label>
               Item Type

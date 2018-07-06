@@ -21,30 +21,44 @@ class Budget extends Component {
 
     return (
       <div>
-        <h2>Income</h2>
-          <table>
-            <tbody>
-              <Item 
-                items = { incomeItems }
-                onCategoryUpdate = {(value, category, type) => {this.toCategoryUpdate(value, category, type)}}
-              />
+        <table>
+          <thead>
+            <tr>
+              <th>Income</th>
+          </tr>
+          </thead>
+              <tbody>
+                <Item 
+                  items = { incomeItems }
+                  onCategoryUpdate = {(value, category, type) => {this.toCategoryUpdate(value, category, type)}}
+                />
+              </tbody>
+              <thead>
+                <tr>
+          <th>Expenses</th>
+          </tr>
+          </thead>
+              <tbody>
+                <Item 
+                  items = { expenseItems }
+                  onCategoryUpdate = {(value, category, type) => {this.toCategoryUpdate(value, category, type)}}
+                />
+              </tbody>
+              <thead>
+                <tr>
+          <th>Total</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" value={total} disabled></input></td>
+            </tr>
             </tbody>
-          </table>
-        <h2>Expenses</h2>
-          <table>
-            <tbody>
-              <Item 
-                items = { expenseItems }
-                onCategoryUpdate = {(value, category, type) => {this.toCategoryUpdate(value, category, type)}}
-              />
-            </tbody>
-          </table>
-        <h2>Total</h2>
-          <input type="text" value={total} disabled></input>
-      <div>
-        <button onClick={(e) => this.activateModal()}>Add a category</button>
-      </div>
-      </div>
+          </table> 
+        <div>
+          <button onClick={(e) => this.activateModal()}>Add a category</button>
+        </div> 
+    </div>
     );
   }
 }
